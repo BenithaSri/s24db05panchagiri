@@ -4,4 +4,20 @@ block content
   h1= title
   p Welcome to #{title}
   p Making changes to check if pug needs a restart everytime we make changes.
-  button(class = "btn btn-success") I am a button
+
+  div 
+   button(class = "btn btn-primary" onclick="double()") I am a button!
+
+  div(id = "double") Up the amount!
+
+  script.
+    let value = 0;
+    let power = 1;
+    function double(){
+      value = value +1;
+      power = power *2;
+      document.getElementById('double').textContent = `Two to the power of ${value} is ${power}`;
+    }
+
+
+
