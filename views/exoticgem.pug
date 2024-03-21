@@ -1,8 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  
+    h1= title
+    p Welcome to #{title}
+
+    - let results =  [{ gem_name: "Starfire Opal", rarity_level: 9,color: "Fiery Orange"},{ gem_name: "Moonshadow Sapphire",rarity_level: 7, color: "Midnight Blue"},{ gem_name: "Sunburst Ruby", rarity_level: 10,color: "Radiant Red"}]
+
+    div(class = "container-fluid")
+        div(class="row")
+            each item, key in results 
+                div(class="col-sm-2")
+                    ul 
+                        li  #{item.gem_name},
+                        li  #{item.rarity_level},
+                        li  #{item.color}
 
 
