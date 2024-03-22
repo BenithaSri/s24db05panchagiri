@@ -8,11 +8,15 @@ block content
 
     div(class = "container-fluid")
         div(class="row")
-            each item, key in results 
-                div(class="col-sm-2")
+            each item, index in results 
+                div(class="col-sm-2" onclick=`buy(${index})`)
                     ul 
                         li  #{item.gem_name},
                         li  #{item.rarity_level},
                         li  #{item.color}
+            script.
+                function buy(index){
+                    alert('You purchased item ' + index);
+                }
 
 

@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var exoticgem = require('./routes/exoticgem');
 var grid = require('./routes/grid');
+var pick = require('./routes/pick');
 
 
 
@@ -27,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/exoticgem',exoticgem );
 app.use('/grid',grid );
+app.use('/pick',pick );
 
 
 // catch 404 and forward to error handler
