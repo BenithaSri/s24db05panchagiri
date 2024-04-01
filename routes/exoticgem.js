@@ -1,9 +1,7 @@
 var express = require('express');
+const ExoticGem_controlers= require('../controllers/ExoticGem');
 var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('exoticgem', { title: 'Search Result for Exotic Gems' });
-});
-
+/* GET ExoticGems */
+router.get('/', ExoticGem_controlers.ExoticGem_view_all_Page );
 module.exports = router;
+
