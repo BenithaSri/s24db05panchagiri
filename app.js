@@ -7,7 +7,7 @@ var Gems = require("./models/ExoticGem");
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
-mongoose = require('mongoose');
+let mongoose = require('mongoose');
 mongoose.connect(connectionString);
 
 var indexRouter = require('./routes/index');
