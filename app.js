@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Gems = require("./models/ExoticGem");
+var bodyParser = require("body-parser");
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -40,6 +42,7 @@ app.use('/exoticgem', exoticgem);
 app.use('/grid', grid);
 app.use('/pick', pick);
 app.use('/resource', resourceRouter);
+
 
 
 // catch 404 and forward to error handler
