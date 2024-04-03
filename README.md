@@ -2,7 +2,7 @@
 
 Assignment on pug
 
-Renderd on : "https://two4wb05panchagiri.onrender.com"
+Renderd on : "https://s24db05panchagiri.onrender.com"
 
 Class: Exotic Gems
 Attributes:
