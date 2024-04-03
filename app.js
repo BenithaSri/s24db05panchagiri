@@ -7,11 +7,8 @@ var Gems = require("./models/ExoticGem");
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
-if (!connectionString) {
-  console.error("MongoDB connection string is undefined. Please set the MONGO_CON environment variable.");
-  process.exit(1); // Exit the process if connection string is not defined
-}
 mongoose = require('mongoose');
+console.log(connectionString);
 mongoose.connect(connectionString);
 
 var indexRouter = require('./routes/index');
