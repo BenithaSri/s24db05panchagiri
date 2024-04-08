@@ -1,0 +1,44 @@
+extends layout
+
+block content
+    h1= title
+
+    if (toShow == null)
+        h2 No instance to update
+    else
+        - let ExoticGemid = toShow._id
+        - let gem_name = toShow.gem_name
+        - let ExoticGemrarity_level = toShow.rarity_level
+        - let ExoticGemcolor = toShow.color
+        div.row(class='mb-2')
+            div.mr-1 ID is
+                div #{ExoticGemid}
+                - let actionid = "/resource/ExoticGemUp/" + ExoticGemid
+                form(id='ExoticGemForm', action= actionid, method="PUT")
+                    div.form-group
+                        label.ExoticGemAttr(for='gem_name') ExoticGem Name
+                        input#gem_name(type='text' name='gem_name', value= gem_name )
+                    div.form-group
+                        label.ExoticGemAttr(for='color') ExoticGem color
+                        input#color(type='text' name='color', value= ExoticGemcolor )
+                    div.form-group
+                        label.ExoticGemAttr(for='rarity_level') ExoticGem rarity_level
+                        input#rarity_level(type='number' name='rarity_level', value= ExoticGemrarity_level )
+                    input(type="submit")
+    script.
+        document.forms['ExoticGemForm'].addEventListener('submit', (event) => {
+            event.preventDefault();
+            // TODO do something here to show user that form is being submitted
+            fetch(event.target.action, {
+                method: 'PUT',
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+            }).then((resp) => {
+                return resp.text(); // or resp.text() or whatever the server sends
+            }).then((body) => {
+                alert("Update succeeded")
+                // TODO handle body
+            }).catch((error) => {
+                // TODO handle error
+                alert("Update failed " + error )
+            });
+        });

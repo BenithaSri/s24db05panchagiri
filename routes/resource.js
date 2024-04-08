@@ -8,11 +8,11 @@ var ExoticGem_controller = require('../controllers/ExoticGem');
 router.get('/', api_controller.api);
 /// ExoticGem ROUTES ///
 // POST request for creating a ExoticGem.
-router.post('/ExoticGem', ExoticGem_controller.ExoticGem_create_post);
+router.post('/ExoticGemCreate', ExoticGem_controller.ExoticGem_create_post);
 // DELETE request to delete ExoticGem.
-router.delete('/ExoticGem/:id', ExoticGem_controller.ExoticGem_delete);
+router.delete('/ExoticGemD/:id', ExoticGem_controller.ExoticGem_delete);
 // PUT request to update ExoticGem.
-router.put('/ExoticGem/:id', ExoticGem_controller.ExoticGem_update_put);
+router.put('/ExoticGemUp/:id', ExoticGem_controller.ExoticGem_update_put);
 // GET request for one ExoticGem.
 router.get('/ExoticGem/:id', ExoticGem_controller.ExoticGem_detail);
 // GET request for list of all ExoticGem items.

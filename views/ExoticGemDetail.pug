@@ -1,0 +1,25 @@
+extends layout
+block content
+    
+    h1= title
+
+    if (toShow == null)
+        h2 No instance to show
+    else
+        - let ExoticGemid = toShow._id
+        - let gem_name = toShow.gem_name
+        - let rarity_level = toShow.rarity_level
+        - let color = toShow.color
+        div
+            div.row
+                div(class='ExoticGemAttr mr-3') ExoticGem ID is:
+                div #{ExoticGemid}
+            div.row
+                div(class='ExoticGemAttr mr-3') ExoticGem Name is:
+                div #{gem_name}
+            div.row
+                div(class='ExoticGemAttr mr-3') ExoticGem Rarity Level is:
+                div #{rarity_level}
+            div.row
+                div(class='ExoticGemAttr mr-3') ExoticGem Color is:
+                div #{color}
