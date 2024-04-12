@@ -20,8 +20,8 @@ exports.ExoticGem_delete = function (req, res) {
 // List of all ExoticGems
 exports.ExoticGem_list = async function (req, res) {
     try {
-        theExoticGems = await ExoticGem.find();
-        res.send(theExoticGems);
+        ExoticGem = await ExoticGem.find();
+        res.render('ExoticGem', { title: 'ExoticGem Search Results', results: ExoticGem });
     }
     catch (err) {
         res.status(500);
@@ -33,8 +33,8 @@ exports.ExoticGem_list = async function (req, res) {
 // Handle a show all view
 exports.ExoticGem_view_all_Page = async function (req, res) {
     try {
-        theExoticGems = await ExoticGem.find();
-        res.render('ExoticGem', { title: 'ExoticGem Search Results', results: theExoticGems });
+        ExoticGem = await ExoticGem.find();
+        res.render('ExoticGem', { title: 'ExoticGem Search Results', results: ExoticGem });
     }
     catch (err) {
         res.status(500);
@@ -133,23 +133,25 @@ exports.ExoticGem_create_Page = function (req, res) {
 // Handle building the view for updating a ExoticGem.
 // query provides the id
 exports.ExoticGem_update_Page = async function (req, res) {
-    console.log("update view for item " + req.query.id)
+    console.log("update view for item " + req.query.id);
     try {
-        let result = await ExoticGem.findById(req.query.id)
-        res.render('ExoticGemupdate', { title: 'ExoticGem Update', toShow: result });
+      let result = await ExoticGem.findById(req.query.id);
+      res.render("ExoticGemUpdate", {
+        title: "ExoticGem Update",
+        toShow: result,
+      });
+    } catch (err) {
+      res.status(500);
+      res.send(`{'error': '${err}'}`);
     }
-    catch (err) {
-        res.status(500)
-        res.send(`{'error': '${err}'}`);
-    }
-};
+  };
 
 // Handle a delete one view with id from query
 exports.ExoticGem_delete_Page = async function (req, res) {
     console.log("Delete view for id " + req.query.id)
     try {
         result = await ExoticGem.findById(req.query.id)
-        res.render('ExoticGemdelete', {
+        res.render('ExoticGemDelete', {
             title: 'ExoticGem Delete', toShow:
                 result
         });

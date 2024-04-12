@@ -3,8 +3,30 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var Gems = require("./models/ExoticGem");
-var bodyParser = require("body-parser");
+var ExoticGem = require("./models/ExoticGem");
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    Account.findOne({ username: username })
+      .then(function (user) {
+        if (err) { return done(err); }
+        if (!user) {
+          return done(null, false, { message: 'Incorrect username.' });
+        }
+        if (!user.validPassword(password)) {
+          return done(null, false, { message: 'Incorrect password.' });
+        }
+        return done(null, user);
+      })
+      .catch(function (err) {
+        return done(err)
+      })
+  })
+)
+
+
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
@@ -19,10 +41,6 @@ var grid = require('./routes/grid');
 var pick = require('./routes/pick');
 var resourceRouter = require('./routes/resource');
 
-
-
-
-
 var app = express();
 
 // view engine setup
@@ -33,8 +51,17 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(require('express-session')({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -43,6 +70,14 @@ app.use('/grid', grid);
 app.use('/pick', pick);
 app.use('/resource', resourceRouter);
 
+
+// passport config
+// Use the existing connection
+// The Account model
+var Account =require('./models/Account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 
 // catch 404 and forward to error handler
@@ -64,9 +99,9 @@ app.use(function (err, req, res, next) {
 // We can seed the collection if needed on server start
 async function recreateDB() {
   // Delete everything
-  await Gems.deleteMany();
+  await ExoticGem.deleteMany();
   let instance1 = new
-    Gems({
+    ExoticGem({
       gem_name: "Emerald", color: 'green',
       rarity_level: 10
     });
@@ -78,7 +113,7 @@ async function recreateDB() {
   });
 
   let instance2 = new
-    Gems({
+    ExoticGem({
       gem_name: "Ruby", color: 'Pink',
       rarity_level: 15
     });
@@ -90,7 +125,7 @@ async function recreateDB() {
   });
 
   let instance3 = new
-    Gems({
+    ExoticGem({
       gem_name: "saphire", color: "orange",
       rarity_level: 20
     });

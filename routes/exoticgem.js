@@ -4,7 +4,7 @@ const ExoticGem_controlers= require('../controllers/ExoticGem');
 var router = express.Router();
 
 // GET request for list of all ExoticGem items.
-// router.get('/ExoticGem', ExoticGem_controller.ExoticGem_list);
+ router.get('/', ExoticGem_controlers.ExoticGem_list);
 
 router.put('/', function(req, res) {
 if(req.body.checkboxsale)toUpdate.sale = true;
@@ -12,7 +12,7 @@ else toUpdate.same = false;
 })
 
 // Delete
-router.get('/', ExoticGem_controlers.ExoticGem_delete );
+//router.get('/', ExoticGem_controlers.ExoticGem_delete );
 
 /* GET detail ExoticGem page */
 router.get('/detail', ExoticGem_controlers.ExoticGem_view_one_Page);
