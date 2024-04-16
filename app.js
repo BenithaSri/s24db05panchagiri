@@ -36,7 +36,7 @@ mongoose.connect(connectionString);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-//var exoticGem = require('./routes/exoticGem');
+var exoticGems = require('./routes/exoticGems');
 var grid = require('./routes/grid');
 var pick = require('./routes/pick');
 var resourceRouter = require('./routes/resource');
@@ -65,7 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/exoticGem', exoticGem);
+app.use('/exoticGem', exoticGems);
 app.use('/grid', grid);
 app.use('/pick', pick);
 app.use('/resource', resourceRouter);
