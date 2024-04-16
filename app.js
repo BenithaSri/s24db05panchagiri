@@ -36,7 +36,7 @@ mongoose.connect(connectionString);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var exoticGem = require('.routes/exoticGem.js');
+//var exoticGem = require('./routes/exoticGem');
 var grid = require('./routes/grid');
 var pick = require('./routes/pick');
 var resourceRouter = require('./routes/resource');
