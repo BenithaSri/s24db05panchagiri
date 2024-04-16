@@ -1,6 +1,13 @@
 extends layout
 
 block content
+
+    style.
+        body {
+            background-image: url('../images/detail.jpg');
+            background-size: 100% 200%; 
+        }
+
     h1= title
     if (toShow == null)
         h2 No instance to delete
@@ -31,7 +38,7 @@ block content
     script.
         function cancel() {
             // Go back to the home page for the ExoticGem collection
-            window.location.href='/ExoticGems'
+            window.location.href='/ExoticGem'
         }
     script.
         function deleteOnid() {
@@ -43,7 +50,7 @@ block content
                 return resp.text(); // or resp.text() or whatever the server sends
             }).then((body) => {
                 alert("Delete succeeded")
-                window.location.href='/ExoticGems'
+                window.location.href='/ExoticGem'
                 // TODO handle body
             }).catch((error) => {
                 // TODO handle error

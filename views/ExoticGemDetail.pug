@@ -1,5 +1,11 @@
 extends layout
 block content
+
+    style.
+        body {
+            background-image: url('../images/detail.jpg');
+            background-size: 100% 200%; 
+        }
     
     h1= title
 
@@ -14,12 +20,16 @@ block content
             div.row
                 div(class='ExoticGemAttr mr-3') ExoticGem ID is:
                 div #{ExoticGemid}
+                br
             div.row
                 div(class='ExoticGemAttr mr-3') ExoticGem Name is:
                 div #{gem_name}
+                br
             div.row
                 div(class='ExoticGemAttr mr-3') ExoticGem Rarity Level is:
                 div #{rarity_level}
+                br
             div.row
                 div(class='ExoticGemAttr mr-3') ExoticGem Color is:
                 div #{color}
+                

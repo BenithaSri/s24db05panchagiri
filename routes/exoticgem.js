@@ -1,31 +1,39 @@
 var express = require('express');
-
-const ExoticGem_controlers= require('../controllers/ExoticGem');
+var passport = require('passport');
+var ExoticGem_controler = require('../controllers/ExoticGem')
 var router = express.Router();
 
-// GET request for list of all ExoticGem items.
- router.get('/', ExoticGem_controlers.ExoticGem_list);
+// A little function to check if we have an authorized user and continue on
+// redirect to login.
+const secured = (req, res, next) => {
+    if (req.user) {
+        return next();
+    }
+    res.redirect("/login");
+}
 
-router.put('/', function(req, res) {
-if(req.body.checkboxsale)toUpdate.sale = true;
-else toUpdate.same = false;
-})
 
-// Delete
-//router.get('/', ExoticGem_controlers.ExoticGem_delete );
+/* GET ExoticGems */
+router.get('/', ExoticGem_controler.ExoticGem_view_all_Page);
+
+router.get('/exoticGem/:id', ExoticGem_controler.ExoticGem_detail);
 
 /* GET detail ExoticGem page */
-router.get('/detail', ExoticGem_controlers.ExoticGem_view_one_Page);
+router.get('/detail', ExoticGem_controler.ExoticGem_view_one_Page);
 
 /* GET create ExoticGem page */
-router.get('/create', ExoticGem_controlers.ExoticGem_create_Page);
+router.get('/create',secured, ExoticGem_controler.ExoticGem_create_Page);
 
-/* GET create update page */
-router.get('/update', ExoticGem_controlers.ExoticGem_update_Page);
+/* GET update ExoticGem page */
+router.get('/update', secured, ExoticGem_controler.ExoticGem_update_Page);
+
 
 /* GET delete ExoticGem page */
-router.get('/delete', ExoticGem_controlers.ExoticGem_delete_Page);
+router.get('/delete', secured, ExoticGem_controler.ExoticGem_delete_Page);
 
+router.post('/login', passport.authenticate('local'), function (req, res) {
+    res.redirect('/');
+});
 
 
 module.exports = router;

@@ -1,4 +1,5 @@
-var ExoticGem = require('../models/ExoticGem');
+var ExoticGem = require('../models/exoticGem');
+
 // List of all ExoticGems
 exports.ExoticGem_list = function (req, res) {
     res.send('NOT IMPLEMENTED: ExoticGem list');
@@ -20,8 +21,8 @@ exports.ExoticGem_delete = function (req, res) {
 // List of all ExoticGems
 exports.ExoticGem_list = async function (req, res) {
     try {
-        ExoticGem = await ExoticGem.find();
-        res.render('ExoticGem', { title: 'ExoticGem Search Results', results: ExoticGem });
+        exoticGem = await ExoticGem.find();
+        res.render('exoticGem', { title: 'ExoticGem Search Results', results: exoticGem });
     }
     catch (err) {
         res.status(500);
@@ -33,8 +34,8 @@ exports.ExoticGem_list = async function (req, res) {
 // Handle a show all view
 exports.ExoticGem_view_all_Page = async function (req, res) {
     try {
-        ExoticGem = await ExoticGem.find();
-        res.render('ExoticGem', { title: 'ExoticGem Search Results', results: ExoticGem });
+        exoticGem = await ExoticGem.find();
+        res.render('exoticGem', { title: 'ExoticGem Search Results', results: exoticGem });
     }
     catch (err) {
         res.status(500);
@@ -45,7 +46,7 @@ exports.ExoticGem_view_all_Page = async function (req, res) {
 // Handle ExoticGem create on POST.
 exports.ExoticGem_create_post = async function (req, res) {
     console.log(req.body)
-    let document = new ExoticGem();
+    let document = new exoticGem();
     document.gem_name = req.body.gem_name;
     document.color = req.body.color;
     document.rarity_level = req.body.rarity_level;
@@ -62,7 +63,7 @@ exports.ExoticGem_create_post = async function (req, res) {
 exports.ExoticGem_detail = async function (req, res) {
     console.log("detail" + req.params.id)
     try {
-        result = await ExoticGem.findById(req.params.id)
+        result = await exoticGem.findById(req.params.id)
         res.send(result)
     } catch (error) {
         res.status(500)
@@ -71,23 +72,24 @@ exports.ExoticGem_detail = async function (req, res) {
 };
 
 exports.ExoticGem_update_put = async function (req, res) {
-    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`)
+    console.log(`update on id ${req.params.id} with body ${JSON.stringify(req.body)}`);
     try {
-        let toUpdate = await ExoticGem.findById(req.params.id)
-        // Do updates of properties
-        if (req.body.gem_name)
-            toUpdate.gem_name = req.body.gem_name;
+        let toUpdate = await ExoticGem.findById(req.params.id);
+        if (!toUpdate) {
+            return res.status(404).send({ error: "ExoticGem not found" });
+        }
+        // Update properties
+        if (req.body.gem_name) toUpdate.gem_name = req.body.gem_name;
         if (req.body.color) toUpdate.color = req.body.color;
         if (req.body.rarity_level) toUpdate.rarity_level = req.body.rarity_level;
         let result = await toUpdate.save();
-        console.log("Sucess " + result)
-        res.send(result)
+        console.log("Success " + result);
+        res.send(result);
     } catch (err) {
-        res.status(500)
-        res.send(`{"error": ${err}: Update for id ${req.params.id}
-        failed`);
+        res.status(500).send({ error: err.message });
     }
 };
+
 
 // Handle ExoticGem delete on DELETE.
 exports.ExoticGem_delete = async function (req, res) {
@@ -105,9 +107,10 @@ exports.ExoticGem_delete = async function (req, res) {
 // Handle a show one view with id specified by query
 exports.ExoticGem_view_one_Page = async function (req, res) {
     console.log("single view for id " + req.query.id)
+    console.log(ExoticGem)
     try {
         result = await ExoticGem.findById(req.query.id)
-        res.render('ExoticGemdetail',
+        res.render('ExoticGemDetail',
             { title: 'ExoticGem Detail', toShow: result });
     }
     catch (err) {
@@ -116,13 +119,14 @@ exports.ExoticGem_view_one_Page = async function (req, res) {
     }
 };
 
+
 // Handle building the view for creating a ExoticGem.
 // No body, no in path parameter, no query.
 // Does not need to be async
 exports.ExoticGem_create_Page = function (req, res) {
     console.log("create view")
     try {
-        res.render('ExoticGemcreate', { title: 'ExoticGem Create' });
+        res.render('ExoticGemCreate', { title: 'ExoticGem Create' });
     }
     catch (err) {
         res.status(500)
@@ -133,18 +137,19 @@ exports.ExoticGem_create_Page = function (req, res) {
 // Handle building the view for updating a ExoticGem.
 // query provides the id
 exports.ExoticGem_update_Page = async function (req, res) {
-    console.log("update view for item " + req.query.id);
+    console.log("update view for item " + req.query.id)
     try {
-      let result = await ExoticGem.findById(req.query.id);
-      res.render("ExoticGemUpdate", {
-        title: "ExoticGem Update",
-        toShow: result,
-      });
-    } catch (err) {
-      res.status(500);
-      res.send(`{'error': '${err}'}`);
+        let result = await ExoticGem.findById(req.query.id)
+        
+        res.render('ExoticGemUpdate', { title: 'ExoticGem Update', toShow: result });
     }
-  };
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
 
 // Handle a delete one view with id from query
 exports.ExoticGem_delete_Page = async function (req, res) {
@@ -152,8 +157,7 @@ exports.ExoticGem_delete_Page = async function (req, res) {
     try {
         result = await ExoticGem.findById(req.query.id)
         res.render('ExoticGemDelete', {
-            title: 'ExoticGem Delete', toShow:
-                result
+            title: 'ExoticGem Delete', toShow:result
         });
     }
     catch (err) {

@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var ExoticGem = require("./models/ExoticGem");
+var ExoticGem = require("./models/exoticGem");
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -36,7 +36,7 @@ mongoose.connect(connectionString);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var exoticgem = require('./routes/exoticgem');
+var exoticGem = require('./routes/exoticGem');
 var grid = require('./routes/grid');
 var pick = require('./routes/pick');
 var resourceRouter = require('./routes/resource');
@@ -65,7 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/exoticgem', exoticgem);
+app.use('/exoticGem', exoticGem);
 app.use('/grid', grid);
 app.use('/pick', pick);
 app.use('/resource', resourceRouter);

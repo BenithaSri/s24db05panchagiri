@@ -2,23 +2,33 @@ extends layout
 
 block content
     h1= title
+    style.
+        body {
+            background-image: url('../images/background_copy.jpg');
+            background-size: 100% 130%; 
+        }
     p Welcome to #{title}
 
     - let items =  results
+    - let destinationCreate = `dispatch("/ExoticGem/create")`
+    button.btn.btn-primary.btn-sm(onclick= destinationCreate) Create
 
-    div(class = "container-fluid")
-        div(class="row m-1")
+    div.container-fluid
+        div.row.m-1
             each item in results 
-                - let destinationUpdate = `dispatch(\"/ExoticGem/update?id=${item._id}\")`
-                    div(class="row-sm-2" class="m-1")
-                        ul 
-                            li  #{item._id}                       
-                            li  #{item.gem_name},
-                            li  #{item.rarity_level},
-                            li  #{item.color}
+                - let destinationUpdate = `dispatch("/ExoticGem/update?id=${item._id}")`
+                - let destinationDetail = `dispatch("/ExoticGem/detail?id=${item._id}")`
+                - let destinationDelete = `dispatch("/ExoticGem/delete?id=${item._id}")`
+                div.row-sm-2.m-1
+                    ul 
+                        li  #{item._id}                       
+                        li  #{item.gem_name},
+                        li  #{item.rarity_level},
+                        li  #{item.color}
 
-                    button.btn( class="btn-primary ml-1", onclick= destinationUpdate) Update
-
+                    button.btn.btn-primary.btn-sm(onclick= destinationUpdate) Update
+                    button.btn.btn-primary.btn-sm(onclick= destinationDetail) Detail 
+                    button.btn.btn-primary.btn-sm(onclick= destinationDelete) Delete 
 
     script.
         function dispatch(path){

@@ -1,11 +1,19 @@
 extends layout
 
 block content
+
+    style.
+        body {
+            background-image: url('../images/detail.jpg');
+            background-size: 100% 200%; 
+        }
+
+        
     h1= title
 
     if (toShow == null)
         h2 No instance to update
-    else
+    else 
         - let ExoticGemid = toShow._id
         - let gem_name = toShow.gem_name
         - let ExoticGemrarity_level = toShow.rarity_level
