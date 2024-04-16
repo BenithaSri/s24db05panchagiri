@@ -1,4 +1,4 @@
-var ExoticGem = require('../models/exoticGem');
+var ExoticGem = require('../models/exoticGems');
 
 // List of all ExoticGems
 exports.ExoticGem_list = function (req, res) {

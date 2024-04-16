@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var ExoticGem = require("./models/exoticGem");
+var ExoticGem = require("./models/exoticGems");
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
